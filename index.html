@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plonkii — Sanal Evcil Hayvan & Mini Oyun</title>
+<style>
+:root{--p:#ff6b8b;--s:#6c5ce7;--a:#00b894;--bg:#fdf6f9;--c:#fff;--t:#2d3436}
+*{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--t);margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+header{width:100%;max-width:480px;display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.logo{font-size:1.5rem;font-weight:900;color:var(--p)}
+.lbtn{background:var(--c);border:2px solid var(--p);color:var(--p);padding:4px 12px;border-radius:20px;font-weight:700;cursor:pointer}
+.wrap{width:100%;max-width:480px;padding:8px 14px;flex:1}
+.card{background:var(--c);border-radius:22px;padding:16px;box-shadow:0 8px 20px rgba(0,0,0,.05);text-align:center;margin-bottom:12px}
+.stats{display:flex;gap:8px;margin-bottom:12px;font-size:.8rem;font-weight:700}
+.sbox{flex:1;background:#f8f9fa;padding:7px;border-radius:11px}
+.bar{height:7px;background:#dfe6e9;border-radius:4px;overflow:hidden;margin-top:4px}
+.fill{height:100%;transition:width .3s}
+.stage{height:215px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;background:radial-gradient(circle,#fff0f5 0%,#fff 75%);border-radius:18px;margin-bottom:12px;overflow:hidden;border:2px solid #ffeaa7;transition:background .4s}
+.ptag{position:absolute;top:10px;background:rgba(255,255,255,.92);padding:4px 14px;border-radius:12px;font-weight:700;font-size:.85rem;color:var(--s);z-index:4;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.pet{position:relative;animation:bounce 1.2s infinite ease-in-out;cursor:pointer;margin-top:18px;user-select:none}
+@keyframes bounce{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-15px) scale(.96,1.04)}}
+.pbody{width:110px;height:94px;background:#ff9ff3;border-radius:50% 50% 45% 45%;position:relative;display:flex;justify-content:center;align-items:center;box-shadow:0 0 0 6px rgba(255,159,243,.3),inset 0 -8px 12px rgba(0,0,0,.08);transition:background .3s}
+.eyes{display:flex;gap:16px;margin-top:-10px}
+.eye{width:27px;height:31px;background:#fff;border-radius:50%;display:flex;justify-content:center;align-items:center;border:2px solid #2d3436}
+.pupil{width:15px;height:17px;background:#2d3436;border-radius:50%;position:relative}
+.spark{width:5px;height:5px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px}
+.mouth{width:16px;height:8px;border-bottom:3px solid #2d3436;border-radius:0 0 10px 10px;position:absolute;bottom:20px}
+.hat{position:absolute;top:-34px;left:50%;transform:translateX(-50%);font-size:2.3rem;z-index:2;pointer-events:none}
+.glass{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:2.1rem;z-index:3;pointer-events:none}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.btn{background:var(--p);color:#fff;border:none;padding:10px 8px;border-radius:13px;font-weight:700;cursor:pointer;font-size:.84rem}
+.btn:active{transform:scale(.96)}
+.bs{background:var(--s)}.ba{background:var(--a)}
+.bo{background:transparent;border:2px solid var(--s);color:var(--s);padding:8px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:12px}
+.tab{padding:9px 4px;background:#dfe6e9;border-radius:12px;border:none;font-weight:700;cursor:pointer;font-size:.78rem}
+.tab.active{background:var(--s);color:#fff}
+.dots{display:flex;justify-content:center;gap:10px;margin-top:12px}
+.dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.2)}
+input[type=text]{width:65%;padding:8px 12px;border-radius:10px;border:1px solid #ccc;font-size:.9rem}
+#garea{width:100%;height:210px;background:linear-gradient(to bottom,#74b9ff,#a29bfe);border-radius:15px;position:relative;overflow:hidden;touch-action:none;cursor:pointer;margin-top:8px}
+#basket{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:2.4rem;user-select:none;pointer-events:none}
+.fruit{position:absolute;font-size:1.7rem;user-select:none;pointer-events:none}
+.flts{display:flex;gap:5px;justify-content:center;margin-bottom:10px}
+.fb{background:#f1f2f6;border:none;padding:5px 10px;border-radius:9px;font-size:.76rem;font-weight:700;cursor:pointer}
+.fb.active{background:var(--p);color:#fff}
+.sitem{display:flex;justify-content:space-between;align-items:center;padding:9px 2px;border-bottom:1px solid #f1f2f6;text-align:left}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.bx{background:#000;color:#fff}
+.big{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff}
+.sbox-txt{background:#f8f9fa;border-radius:11px;padding:10px;font-size:.82rem;border:1px solid #dfe6e9;margin-top:8px;text-align:left}
+#igc{width:180px;height:180px;border-radius:14px;border:2px solid #dfe6e9;margin:8px auto 0;display:block}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:flex;justify-content:center;align-items:center;z-index:1000;padding:15px}
+.mbox{background:#fff;max-width:480px;max-height:80vh;overflow-y:auto;padding:20px;border-radius:18px;text-align:left;font-size:.85rem;line-height:1.5}
+footer{text-align:center;font-size:.78rem;color:#636e72;padding:12px}
+footer a{color:var(--s);font-weight:700;cursor:pointer}
+#ck{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:92%;max-width:460px;background:#2d3436;color:#fff;padding:12px 15px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:999;font-size:.8rem}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🐾 Plonkii</div>
+    <div>
+        <span id="coins" style="font-weight:700;margin-right:8px">🪙 50</span>
+        <button class="lbtn" onclick="tLang()" id="lbtn">EN</button>
+    </div>
+</header>
+
+<div class="wrap">
+    <div class="card">
+        <div class="stats">
+            <div class="sbox"><span data-tr="Tokluk" data-en="Hunger">Tokluk</span><div class="bar"><div id="bh" class="fill" style="width:80%;background:#00b894"></div></div></div>
+            <div class="sbox"><span data-tr="Mutluluk" data-en="Happiness">Mutluluk</span><div class="bar"><div id="bm" class="fill" style="width:80%;background:#ff6b8b"></div></div></div>
+            <div class="sbox"><span data-tr="Enerji" data-en="Energy">Enerji</span><div class="bar"><div id="be" class="fill" style="width:80%;background:#6c5ce7"></div></div></div>
+        </div>
+        <div class="stage" id="stage">
+            <div class="ptag" id="ptitle">✨ Pofuduk</div>
+            <div class="pet" onclick="act('love')">
+                <div id="hat-s" class="hat"></div>
+                <div id="glass-s" class="glass"></div>
+                <div id="pbody" class="pbody">
+                    <div class="eyes">
+                        <div class="eye"><div class="pupil"><div class="spark"></div></div></div>
+                        <div class="eye"><div class="pupil"><div class="spark"></div></div></div>
+                    </div>
+                    <div class="mouth"></div>
+                </div>
+            </div>
+        </div>
+        <div class="acts">
+            <button class="btn" onclick="act('feed')" data-tr="🍓 Besle" data-en="🍓 Feed">🍓 Besle</button>
+            <button class="btn bs" onclick="act('love')" data-tr="💖 Sev" data-en="💖 Pet">💖 Sev</button>
+            <button class="btn ba" onclick="act('sleep')" data-tr="💤 Uyut" data-en="💤 Sleep">💤 Uyut</button>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab active" onclick="tab('av',this)" data-tr="🎨 Profil" data-en="🎨 Profile">🎨 Profil</button>
+        <button class="tab" onclick="tab('gm',this)" data-tr="🎮 Oyun" data-en="🎮 Game">🎮 Oyun</button>
+        <button class="tab" onclick="tab('sh',this)" data-tr="🛍️ Mağaza" data-en="🛍️ Shop">🛍️ Mağaza</button>
+        <button class="tab" onclick="tab('sr',this)" data-tr="📲 Paylaş" data-en="📲 Share">📲 Paylaş</button>
+    </div>
+
+    <div id="tab-av" class="card">
+        <h3 style="margin-top:0" data-tr="Karakterini Özelleştir" data-en="Customize Pet">Karakterini Özelleştir</h3>
+        <input type="text" id="nin" placeholder="Yeni isim..." maxlength="15">
+        <button class="btn bs" onclick="sName()" data-tr="Kaydet" data-en="Save">Kaydet</button>
+        <div class="dots">
+            <div class="dot" style="background:#ff9ff3" onclick="sCol('#ff9ff3')"></div>
+            <div class="dot" style="background:#74b9ff" onclick="sCol('#74b9ff')"></div>
+            <div class="dot" style="background:#55efc4" onclick="sCol('#55efc4')"></div>
+            <div class="dot" style="background:#ffeaa7" onclick="sCol('#ffeaa7')"></div>
+            <div class="dot" style="background:#a29bfe" onclick="sCol('#a29bfe')"></div>
+        </div>
+    </div>
+
+    <div id="tab-gm" class="card hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+            <h3 style="margin:0" data-tr="🍎 Meyve Yakala" data-en="🍎 Catch Fruits">🍎 Meyve Yakala</h3>
+            <span id="gsc" style="font-weight:700;color:var(--s)">Skor: 0 | Rekor: 0</span>
+        </div>
+        <p style="font-size:.78rem;color:#636e72;margin:4px 0" data-tr="Meyveleri yakala altın kazan, bombalardan (💣) kaç!" data-en="Catch fruits for coins, avoid bombs (💣)!">Meyveleri yakala altın kazan, bombalardan (💣) kaç!</p>
+        <div id="garea"><div id="basket">🧺</div></div>
+        <button class="btn ba" style="width:100%;margin-top:10px" id="sbtn" onclick="startG()" data-tr="Oyunu Başlat" data-en="Start Game">Oyunu Başlat</button>
+    </div>
+
+    <div id="tab-sh" class="card hidden">
+        <h3 style="margin-top:0" data-tr="🛍️ Plonkii Mağazası" data-en="🛍️ Plonkii Shop">🛍️ Plonkii Mağazası</h3>
+        <div class="flts">

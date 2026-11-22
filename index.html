@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mühür & Satır | Anlamlı Mektup Gönderimi</title>
+    <script src="https://tailwindcss.com"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FAF8F5; color: #2C2825; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Üst Menü -->
+    <header class="border-b border-[#E8E2D9] bg-[#FAF8F5]/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl serif font-semibold tracking-wide text-[#8C3B2B]">Mühür & Satır</div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-[#5C544E]">
+                <a href="#nasil-calisir" class="hover:text-[#8C3B2B] transition">Nasıl Çalışır?</a>
+                <a href="#kategoriler" class="hover:text-[#8C3B2B] transition">Kime Gönderebilirsin?</a>
+                <a href="#siparis" class="hover:text-[#8C3B2B] transition">Mektup Oluştur</a>
+            </nav>
+            <a href="#siparis" class="bg-[#8C3B2B] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-[#702E21] transition">Hemen Yaz</a>
+        </div>
+    </header>
+
+    <!-- Hero Bölümü -->
+    <section class="max-w-5xl mx-auto px-6 py-20 text-center">
+        <span class="inline-block py-1 px-3 rounded-full bg-[#EFE9E0] text-[#8C3B2B] text-xs font-semibold tracking-wider uppercase mb-4">Türkiye & Tüm Avrupa'ya Gönderim</span>
+        <h1 class="text-4xl md:text-6xl serif font-semibold leading-tight mb-6">
+            Çiçekler Solar, <br><span class="italic font-normal text-[#8C3B2B]">Kelimeler Ömür Boyu Saklanır.</span>
+        </h1>
+        <p class="text-lg text-[#5C544E] max-w-2xl mx-auto mb-10">
+            Sevgilinize, eşinize, ailenize veya yöneticinize; özel dokulu pamuk kağıtlara basılmış, balmumu mühürlü ve kurutulmuş çiçek kokulu gerçek bir mektup gönderin.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#siparis" class="bg-[#8C3B2B] text-white px-8 py-4 rounded-full font-medium hover:bg-[#702E21] transition shadow-lg shadow-[#8C3B2B]/20">Mektubunu Oluştur</a>
+            <a href="#kategoriler" class="bg-white border border-[#DCD4C8] text-[#2C2825] px-8 py-4 rounded-full font-medium hover:bg-[#F3EFEA] transition">Konseptleri İncele</a>
+        </div>
+    </section>
+
+    <!-- Kategoriler -->
+    <section id="kategoriler" class="max-w-6xl mx-auto px-6 py-16">
+        <h2 class="text-3xl serif font-semibold text-center mb-12">Her Duyguya Özel Tasarım</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-2xl border border-[#EAE4DC] hover:shadow-md transition">
+                <div class="text-2xl mb-3">💌</div>
+                <h3 class="font-semibold text-lg mb-2">Sevgiliye & Eşe</h3>
+                <p class="text-sm text-[#6B625B]">Kırmızı balmumu mühür, gül yaprağı dokusu ve romantik el yazısı fontuyla aşkınızı ölümsüzleştirin.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-[#EAE4DC] hover:shadow-md transition">
+                <div class="text-2xl mb-3">🌿</div>
+                <h3 class="font-semibold text-lg mb-2">Aile Üyelerine</h3>
+                <p class="text-sm text-[#6B625B]">Annenize, babanıza veya uzaktaki sevdiklerinize nostaljik kraft zarfta sıcak bir teşekkür mektubu.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-[#EAE4DC] hover:shadow-md transition">
+                <div class="text-2xl mb-3">🤝</div>
+                <h3 class="font-semibold text-lg mb-2">Yöneticiye & Kurumsal</h3>
+                <p class="text-sm text-[#6B625B]">Altın varak mühürlü, ağır gramajlı fildişi kağıt ile prestijli bir tebrik ve teşekkür sunumu.</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl border border-[#EAE4DC] hover:shadow-md transition">
+                <div class="text-2xl mb-3">✨</div>
+                <h3 class="font-semibold text-lg mb-2">Arkadaşa & Özür</h3>
+                <p class="text-sm text-[#6B625B]">Doğum günleri veya kırgınlıkları onarmak için lavanta kokulu, samimi ve unutulmaz bir jest.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Canlı Mektup Oluşturucu -->
+    <section id="siparis" class="max-w-4xl mx-auto px-6 py-16">
+        <div class="bg-white p-8 md:p-12 rounded-3xl border border-[#E5DDD3] shadow-sm">
+            <h2 class="text-3xl serif font-semibold mb-2">Mektubunu Tasarla</h2>
+            <p class="text-sm text-[#6B625B] mb-8">Metninizi yazın, konseptinizi seçin; biz özenle hazırlayıp adresine ulaştıralım.</p>
+
+            <form id="letterForm" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Gönderim Bölgesi</label>
+                        <select id="region" class="w-full p-3 rounded-xl border border-[#DCD4C8] bg-[#FAF8F5] focus:outline-none focus:border-[#8C3B2B]">
+                            <option value="Türkiye (290 TL)">Türkiye İçi (290 TL)</option>
+                            <option value="Avrupa Birliği & UK (19 €)">Avrupa Birliği & İngiltere (19 €)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Kime Gönderiliyor?</label>
+                        <select id="recipientType" class="w-full p-3 rounded-xl border border-[#DCD4C8] bg-[#FAF8F5] focus:outline-none focus:border-[#8C3B2B]">
+                            <option value="Sevgili / Eş">Sevgili / Eş</option>
+                            <option value="Anne / Baba / Aile">Anne / Baba / Aile</option>
+                            <option value="Yönetici / İş Ortağı">Yönetici / İş Ortağı</option>
+                            <option value="Arkadaş">Arkadaş</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Alıcının Adı Soyadı</label>
+                        <input type="text" id="recipientName" required placeholder="Örn: Zeynep Yılmaz" class="w-full p-3 rounded-xl border border-[#DCD4C8] bg-[#FAF8F5]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Zarf Mühür & Koku Seçimi</label>
+                        <select id="scent" class="w-full p-3 rounded-xl border border-[#DCD4C8] bg-[#FAF8F5]">
+                            <option value="Bordo Mühür + Gül Kokusu">Bordo Mühür + Gül Kokusu</option>
+                            <option value="Altın Mühür + Odunsu/Prestij">Altın Mühür + Odunsu/Prestij</option>
+                            <option value="Yeşil Mühür + Lavanta Yaprakları">Yeşil Mühür + Lavanta Yaprakları</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">Mektup Metniniz</label>
+                    <textarea id="letterText" rows="6" required placeholder="Kalbinizden geçenleri buraya dökün..." class="w-full p-4 rounded-xl border border-[#DCD4C8] bg-[#FAF8F5] serif text-lg"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">Teslimat Adresi</label>
+                    <textarea id="address" rows="2" required placeholder="Ülke, Şehir, Açık Adres..." class="w-full p-3 rounded-xl border border-[#DCD4C8] bg-[#FAF8F5]"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-[#8C3B2B] text-white py-4 rounded-xl font-semibold hover:bg-[#702E21] transition">
+                    Siparişi WhatsApp ile Tamamla
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="text-center py-8 text-sm text-[#7A7067] border-t border-[#E8E2D9]">
+        © 2026 Mühür & Satır. Tüm hakları saklıdır.
+    </footer>
+
+    <script>
+        document.getElementById('letterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = "905555555555"; // Kendi WhatsApp numaranızı yazın
+            const region = document.getElementById('region').value;
+            const type = document.getElementById('recipientType').value;
+            const name = document.getElementById('recipientName').value;
+            const scent = document.getElementById('scent').value;
+            const text = document.getElementById('letterText').value;
+            const address = document.getElementById('address').value;
+
+            const message = `*Yeni Mektup Siparişi*%0A%0A*Bölge:* ${region}%0A*Kategori:* ${type}%0A*Alıcı:* ${name}%0A*Konsept:* ${scent}%0A*Adres:* ${address}%0A%0A*Mektup Metni:*%0A${text}`;
+            window.open(`https://wa.me{phone}?text=${message}`, '_blank');
+        });
+    </script>
+</body>
+</html>

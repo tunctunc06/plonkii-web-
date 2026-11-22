@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLONKII | Bespoke Physical Correspondence for Luxury Maisons</title>
+    
+    <!-- Google Fonts: Cormorant Garamond, Montserrat & Noto Sans Arabic/SC -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&family=Noto+Sans+Arabic:wght@300;400;600&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-obsidian: #08080A;
+            --bg-velvet: #101014;
+            --bg-paper: #161518;
+            --gold-champagne: #D4AF37;
+            --gold-silk: #F3E5AB;
+            --gold-border: rgba(212, 175, 55, 0.25);
+            --wax-crimson: #5E191E;
+            --text-ivory: #F6F5F0;
+            --text-ash: #9E9DA4;
+            --font-serif: 'Cormorant Garamond', 'Noto Serif SC', serif;
+            --font-sans: 'Montserrat', 'Noto Sans Arabic', sans-serif;
+            --transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-ivory);
+            font-family: var(--font-sans);
+            font-weight: 300;
+            line-height: 1.85;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: var(--font-serif);
+            font-weight: 400;
+            letter-spacing: 0.03em;
+        }
+
+        /* Navigasyon & Çoklu Dil Seçici */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.3rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(8, 8, 10, 0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.9rem;
+            letter-spacing: 0.28em;
+            color: var(--text-ivory);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-ash);
+            text-decoration: none;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-champagne);
+        }
+
+        .lang-select-wrapper {
+            position: relative;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 1.2rem;
+        }
+
+        [dir="rtl"] .lang-select-wrapper {
+            border-left: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 0;
+            padding-right: 1.2rem;
+        }
+
+        .lang-select {
+            background: transparent;
+            color: var(--gold-silk);
+            border: 1px solid var(--gold-border);
+            padding: 0.4rem 0.8rem;
+            font-family: var(--font-sans);
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .lang-select:hover {
+            border-color: var(--gold-champagne);
+        }
+
+        .lang-select option {
+            background: var(--bg-obsidian);
+            color: var(--text-ivory);
+        }
+
+        /* Hero Bölümü */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 7rem 10% 4rem;
+            background: radial-gradient(circle at 50% 40%, #191820 0%, #08080A 75%);
+        }
+
+        .hero-tag {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            color: var(--gold-champagne);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+            line-height: 1.15;
+            max-width: 960px;
+            margin-bottom: 1.8rem;
+        }
+
+        .hero p {
+            color: var(--text-ash);
+            max-width: 650px;
+            font-size: 0.96rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-gold {
+            padding: 1.15rem 2.8rem;
+            border: 1px solid var(--gold-champagne);
+            color: var(--gold-silk);
+            text-decoration: none;
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-champagne);
+            color: var(--bg-obsidian);
+            box-shadow: 0 0 35px rgba(212, 175, 55, 0.28);
+        }
+
+        /* Bölümler */
+        section {
+            padding: 7.5rem 10%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+        }
+
+        .section-subtitle {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.32em;
+            color: var(--gold-champagne);
+            display: block;
+            margin-bottom: 0.7rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.1rem, 3.8vw, 3.1rem);
+        }
+
+        /* CEO'lara Yönetici Mektubu (Fiziksel Kağıt Hissi) */
+        .ceo-letter-section {
+            background-color: var(--bg-velvet);
+        }
+
+        .parchment-card {
+            max-width: 840px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #18171C 0%, #121115 100%);
+            padding: clamp(2.5rem, 6vw, 5.5rem);
+            border: 1px solid var(--gold-border);
+            position: relative;
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.7);
+        }
+
+        .parchment-card::before {
+            content: '';
+            position: absolute;
+            inset: 14px;
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            pointer-events: none;
+        }
+
+        .letter-meta {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-ash);
+        }
+
+        .letter-salutation {
+            font-family: var(--font-serif);
+            font-size: 1.7rem;
+            font-style: italic;
+            color: var(--gold-silk);
+            margin-bottom: 2rem;
+        }
+
+        .letter-content p {
+            margin-bottom: 1.6rem;
+            color: #DCDCE0;
+            font-size: 0.98rem;
+            text-align: justify;
+        }
+
+        .letter-footer {
+            margin-top: 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .wax-seal {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #8A242B, var(--wax-crimson));
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 1.4rem;
+            color: var(--gold-silk);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,0,0,0.5);
+            letter-spacing: 0.05em;
+        }
+
+        .signature-block {
+            text-align: right;
+        }
+
+        [dir="rtl"] .signature-block {
+            text-align: left;
+        }
+
+        .signature-name {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 2.1rem;
+            color: var(--gold-champagne);
+            display: block;
+        }
+
+        .signature-role {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-ash);
+        }
+
+        /* Zanaat ve Hizmet Sütunları */
+        .craft-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .craft-card {
+            background: var(--bg-velvet);
+            padding: 3rem 2.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .craft-card:hover {
+            border-color: var(--gold-border);
+            transform: translateY(-6px);
+        }
+
+        .craft-roman {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--gold-champagne);
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .craft-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-ivory);
+        }
+
+        .craft-card p {
+            color: var(--text-ash);
+            font-size: 0.88rem;

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Masal Odası</title>
+<style>
+:root{--bg:#fff7e8;--card:#fff;--ink:#3a2f4b;--mut:#7a6f8c;--line:#f0e3c9;--a:#7c5cff;--hl:#ffe08a;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171430;--card:#221d45;--ink:#f1ecff;--mut:#a79fc9;--line:#34305e;--a:#a995ff;--hl:#5b4a1c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171430;--card:#221d45;--ink:#f1ecff;--mut:#a79fc9;--line:#34305e;--a:#a995ff;--hl:#5b4a1c;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 ui-rounded,"Nunito","Trebuchet MS",system-ui,sans-serif;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.w{max-width:900px;margin:0 auto;padding:24px 16px}
+.hd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+h1{margin:0;font-size:clamp(1.9rem,6vw,3rem);line-height:1.1}
+.sub{color:var(--mut);margin:6px 0 22px}
+button,select,input,textarea{font:inherit;color:var(--ink)}
+.btn{border:2px solid var(--line);background:var(--card);border-radius:14px;padding:9px 16px;cursor:pointer;font-weight:700}
+.btn.p{background:var(--a);border-color:var(--a);color:#fff}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--a);outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.t{border:0;border-radius:20px;padding:18px 14px;text-align:center;cursor:pointer;background:hsl(var(--h) 80% 90%);color:#2b2340;font-weight:700;line-height:1.3}
+:root[data-theme="dark"] .t{background:hsl(var(--h) 35% 28%);color:#f1ecff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .t{background:hsl(var(--h) 35% 28%);color:#f1ecff}}
+.t:hover{transform:translateY(-3px)}
+.t .e{display:block;font-size:2.8rem;margin-bottom:6px}
+details{margin-top:26px;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 16px}
+summary{cursor:pointer;font-weight:700}
+details input,details textarea{width:100%;margin:8px 0;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--bg)}
+.rd h2{font-size:clamp(1.6rem,5vw,2.2rem);margin:6px 0}
+.ctl{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--bg);padding:10px 0;border-bottom:2px solid var(--line)}
+.ctl label{font-size:.85rem;color:var(--mut);display:flex;gap:6px;align-items:center}
+.ctl select{max-width:170px;padding:6px;border-radius:8px;border:2px solid var(--line);background:var(--card)}
+.story{font-size:clamp(1.25rem,3.8vw,1.55rem);line-height:1.85;margin-top:18px;max-width:34em}
+.story span{cursor:pointer;border-radius:6px;padding:1px 2px}
+.story span.on{background:var(--hl)}
+.note{color:var(--mut);font-size:.85rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="w">
+ <section id="home">
+  <div class="hd"><div><h1>🌙 Masal Odası</h1><p class="sub">Bir masal seç, rahatça otur; masalı sana sesli okuyalım.</p></div><button class="btn" id="tm">Uyku modu</button></div>
+  <div class="grid" id="grid"></div>
+  <details><summary>Kendi masalını ekle</summary>
+   <input id="nt" placeholder="Masalın adı" aria-label="Masalın adı">
+   <textarea id="nx" rows="5" placeholder="Masalın metnini buraya yapıştır…" aria-label="Masal metni"></textarea>
+   <button class="btn p" id="add">Listeye ekle</button>
+  </details>
+ </section>
+ <section id="rd" class="rd" hidden>
+  <button class="btn" id="bk">← Masallara dön</button>
+  <h2 id="rt"></h2>
+  <div class="ctl">
+   <button class="btn p" id="pl">▶ Oku</button>
+   <button class="btn" id="pv" aria-label="Önceki cümle">⏮</button>
+   <button class="btn" id="nx2" aria-label="Sonraki cümle">⏭</button>
+   <label>Hız <input type="range" id="rt2" min=".6" max="1.2" step=".05" value=".85"></label>
+   <label>Ses <select id="vs"></select></label>
+  </div>
+  <p class="note" id="vn" hidden>Cihazında Türkçe ses bulunamadı; varsayılan ses kullanılacak.</p>
+  <div class="story" id="story"></div>
+ </section>
+</div>
+<script>
+const T=[
+{e:"🐺",t:"Kırmızı Başlıklı Kız",x:"Bir varmış, bir yokmuş. Ormanın kenarında kırmızı pelerinli küçük bir kız yaşarmış. Bir gün annesi ona, hasta büyükannesine götürmesi için bir sepet ekmek ve bal vermiş. Kız ormanda yürürken bir kurt onu görmüş. Kurt büyükannenin evine koşup yatağa yatmış. Kız eve girince büyük kulakları ve büyük dişleri fark edip yüksek sesle bağırmış. Yakındaki avcı sesi duyup koşmuş ve kurt ormana kaçmış. Küçük kız o günden sonra yabancılarla konuşmamayı öğrenmiş."},
+{e:"🐷",t:"Üç Küçük Domuz",x:"Üç küçük domuz kardeş, kendi evlerini yapmaya karar vermiş. Birincisi samandan, ikincisi çalı çırpıdan bir ev yapıp oyuna dalmış. Üçüncüsü ise tuğla üstüne tuğla koyarak sağlam bir ev yapmış. Koca kurt gelip üfleyince saman ve çalı evler yıkılmış. İki kardeş hemen tuğla eve koşmuş. Kurt ne kadar üflese de ev yerinden oynamamış. Kurt utanıp gitmiş. Domuzlar emeğin değerini öğrenmiş."},
+{e:"🐢",t:"Tavşan ile Kaplumbağa",x:"Hızlı koşmasıyla övünen tavşan, kaplumbağaya yarış önermiş. Yarış başlayınca tavşan çok ilerlemiş. Kaplumbağayı çok geride görünce bir ağacın altında uyuyakalmış. Kaplumbağa ise yavaş ama durmadan yürümüş. Tavşan uyandığında kaplumbağa bitiş çizgisine varmak üzereymiş. Tavşan var gücüyle koşmuş ama yetişememiş. Sabırla çalışan, sonunda kazanır."},
+{e:"🦆",t:"Çirkin Ördek Yavrusu",x:"Bir ördek yuvasında diğerlerinden büyük ve gri bir yavru çıkmış. Herkes ona çirkin demiş, o da üzülüp yuvadan uzaklaşmış. Soğuk bir kış boyunca tek başına dolaşmış. Bahar gelince bir göle gitmiş ve suda kendi yansımasını görmüş. Yansıması bembeyaz, zarif bir kuğuymuş. Diğer kuğular onu aralarına almış. Herkes kendine göre güzeldir."},
+{e:"🦁",t:"Aslan ile Fare",x:"Uyuyan aslanın üzerinden küçük bir fare koşmuş ve aslanı uyandırmış. Aslan kızıp fareyi yakalamış. Fare, bırakılırsa bir gün aslana yardım edeceğine söz vermiş. Aslan gülmüş ama onu bırakmış. Bir gün aslan avcıların ağına düşmüş. Fare sesini duyup koşmuş ve ipleri kemirerek onu kurtarmış. Küçük dostlar da büyük işler yapar."},
+{e:"🐜",t:"Karınca ile Ağustosböceği",x:"Bütün yaz boyunca ağustosböceği şarkı söyleyip dolaşmış, karınca ise kışlık yiyecek biriktirmiş. Ağustosböceği ona gülmüş. Kış gelince kar yağmış ve ağustosböceğinin yiyeceği kalmamış. Karıncanın kapısını çalıp yardım istemiş. Karınca ona biraz yemek vermiş ve gelecek yıl hazırlıklı olmasını söylemiş. Ağustosböceği de çalışmanın değerini anlamış."},
+{e:"👠",t:"Külkedisi",x:"Güzel kalpli Külkedisi, üvey annesi ve kardeşleriyle yaşar, bütün işleri o yaparmış. Sarayda bir balo verilecekmiş. Perili anne ona bir elbise ve cam ayakkabılar yaratmış, ama gece yarısına kadar dönmesini söylemiş. Külkedisi balodan koşarken bir ayakkabısını düşürmüş. Prens ayakkabıyı bulup ayağına uyan kızı aramış. Ayakkabı yalnızca Külkedisi’ne olmuş. İkisi mutlu yaşamış."},
+{e:"🐐",t:"Kurt ile Yedi Keçi Yavrusu",x:"Anne keçi yedi yavrusuna, kapıyı kimseye açmamalarını söyleyip işe çıkmış. Kurt sesini inceltip kapıya gelmiş. Yavrular kurdun kara pençesini görünce kapıyı açmamış. Kurt pençesini una batırıp beyazlatınca küçükler kandırılmış. Anne keçi eve dönünce yavrularını bulup kurtarmış. Kurt da bir daha o eve yaklaşmamış. Yabancılara kapıyı açmamak gerekir."},
+{e:"🍬",t:"Hansel ile Gretel",x:"Hansel ve Gretel ormanda kaybolmuşlar. Yolu bulmak için ekmek kırıntıları bırakmışlar ama kuşlar hepsini yemiş. Sonra şekerden yapılmış bir ev bulmuşlar, içinde yaşlı bir cadı varmış. Cadı Hansel’i bir kafese kapatmış. Gretel cesurca cadıyı kandırıp kardeşini kurtarmış. İkisi cadının hazinesiyle eve dönmüş ve babalarına kavuşmuş."},
+{e:"🐸",t:"Kurbağa Prens",x:"Bir prenses altın topunu kuyuya düşürüp ağlarken bir kurbağa ona yardım etmiş. Karşılığında arkadaş olmayı istemiş. Prenses önce sözünü tutmak istememiş, ama babası ona söz verdiğinde tutması gerektiğini söylemiş. Prenses kurbağayı sofrasına almış. Kurbağa, bir büyüyle bu hale gelmiş bir prensmiş. İyilik her zaman geri döner."},
+{e:"🎺",t:"Bremen Mızıkacıları",x:"Yaşlı bir eşek, bir köpek, bir kedi ve bir horoz, evlerinden çıkarılınca Bremen’e gidip mızıkacı olmaya karar vermiş. Yolda bir eve rastlamışlar, içinde hırsızlar varmış. Hayvanlar birbirinin sırtına çıkıp aynı anda ses çıkarmış. Hırsızlar korkup kaçmış. Hayvanlar o eve yerleşip mutlu yaşamış. Birlikte olmak güç verir."},
+{e:"🤥",t:"Pinokyo",x:"Marangoz Geppetto tahtadan bir kukla yapmış ve adını Pinokyo koymuş. Peri onu canlandırmış ve doğru sözlü olursa gerçek bir çocuk olacağını söylemiş. Pinokyo yalan söyledikçe burnu uzamış. Okul yerine oyuncağa kaçmış ve başı belaya girmiş. Sonunda balinanın karnındaki babasını kurtarınca iyi yürekli olduğunu göstermiş. Peri onu gerçek bir çocuğa dönüştürmüş."}
+];
+const $=id=>document.getElementById(id);
+let cur=null,sents=[],idx=0,playing=false,tk=0,voices=[];
+const synth=window.speechSynthesis;
+function grid(){$("grid").innerHTML=T.map((m,i)=>`<button class="t" style="--h:${(i*47)%360}" data-i="${i}"><span class="e">${m.e}</span>${m.t}</button>`).join("")}
+$("grid").onclick=e=>{const b=e.target.closest(".t");if(b)openT(+b.dataset.i)};
+function openT(i){
+ cur=T[i];stop();
+ sents=cur.x.match(/[^.!?…]+[.!?…]+["”]?\s*/g)||[cur.x];
+ $("rt").textContent=cur.e+" "+cur.t;
+ $("story").innerHTML=sents.map((s,k)=>`<span data-k="${k}">${s.replace(/</g,"&lt;")}</span>`).join("");
+ idx=0;hl();$("home").hidden=true;$("rd").hidden=false;scrollTo(0,0);
+}
+function hl(){document.querySelectorAll(".story span").forEach((s,k)=>s.classList.toggle("on",playing&&k===idx))}
+function stop(){playing=false;tk++;if(synth)synth.cancel();ui()}
+function ui(){$("pl").textContent=playing?"⏸ Duraklat":"▶ Oku";hl()}
+function say(i){
+ if(!synth){alert("Tarayıcın sesli okumayı desteklemiyor.");return}
+ if(i>=sents.length){playing=false;idx=0;ui();return}
+ idx=i;playing=true;ui();
+ const my=++tk;synth.cancel();
+ const u=new SpeechSynthesisUtterance(sents[i].trim());
+ u.lang="tr-TR";u.rate=+$("rt2").value;u.pitch=1.05;
+ const v=voices[$("vs").value];if(v)u.voice=v;
+ u.onend=()=>{if(playing&&my===tk)say(i+1)};
+ u.onerror=()=>{if(my===tk&&playing&&!synth.speaking)playing=false,ui()};
+ synth.speak(u);
+ const el=document.querySelector(`.story span[data-k="${i}"]`);if(el)el.scrollIntoView({block:"center",behavior:"smooth"});
+}
+$("pl").onclick=()=>playing?stop():say(idx);
+$("pv").onclick=()=>say(Math.max(0,idx-1));
+$("nx2").onclick=()=>say(Math.min(sents.length-1,idx+1));
+$("story").onclick=e=>{const s=e.target.closest("span");if(s)say(+s.dataset.k)};
+$("rt2").onchange=()=>{if(playing)say(idx)};
+$("vs").onchange=()=>{if(playing)say(idx)};
+$("bk").onclick=()=>{stop();$("rd").hidden=true;$("home").hidden=false};
+function loadV(){
+ if(!synth)return;
+ const all=synth.getVoices();
+ voices=all.filter(v=>/^tr/i.test(v.lang));
+ $("vn").hidden=voices.length>0;
+ if(!voices.length)voices=all;
+ $("vs").innerHTML=voices.map((v,i)=>`<option value="${i}">${v.name}</option>`).join("");
+}
+loadV();if(synth)synth.onvoiceschanged=loadV;
+$("add").onclick=()=>{
+ const t=$("nt").value.trim(),x=$("nx").value.trim();
+ if(!t||!x){alert("Masalın adını ve metnini yaz.");return}
+ T.push({e:"📖",t,x});grid();$("nt").value=$("nx").value="";
+};
+$("tm").onclick=()=>{
+ const r=document.documentElement,dark=getComputedStyle(r).colorScheme==="dark";
+ r.dataset.theme=dark?"light":"dark";
+};
+addEventListener("pagehide",stop);
+grid();
+</script>
+</body>
+</html>
